@@ -1,9 +1,9 @@
 from flask import Flask
 
-from .apis.example.endpoint import example_blueprint
+from .endpoints.blueprints.example import example_blueprint
 from .config import app_config
 
-__all__ = ['apis', 'config', 'run.py', 'init']
+__all__ = ['endpoints', 'config', 'run.py', 'init']
 
 
 def init(config_name):

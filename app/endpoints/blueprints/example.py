@@ -1,15 +1,8 @@
-import logging
-
-from flask import Flask
 from flask import request, make_response, jsonify, Blueprint
 from flask_restplus import Resource, fields, Api
 
-logger = logging.getLogger(__name__)
-
 example_blueprint = Blueprint('api', __name__)
-
 api = Api(example_blueprint)
-
 example_name_space = api.namespace('example', description='Example APIs')
 
 
@@ -59,9 +52,3 @@ class ExampleEndpoint(Resource):
              parser=parser)
     def delete(self):
         return make_response(self.__success(request.form.get("id")), 200)
-
-
-if __name__ == '__main__':
-    app = Flask(__name__)
-    app.register_blueprint(example_blueprint)
-    app.run()
