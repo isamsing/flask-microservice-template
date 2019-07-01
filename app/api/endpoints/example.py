@@ -44,7 +44,7 @@ class ExampleEndpoint(Resource):
             return make_response(self.__failure("Bad request"), 400)
 
     parser = api.parser()
-    parser.add_argument('id', type=str, required=True, help='id', location='form')
+    parser.add_argument('id', type=str, required=True, help='id')
 
     @api.doc(responses={200: 'Ok',
                         404: 'Not Found',
