@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from app import init
+from app.bootstrap import init
 
 
 class ExampleEndpointTest(unittest.TestCase):
@@ -9,7 +9,7 @@ class ExampleEndpointTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.uri = "/example/"
-        cls.app = init("testing").test_client()
+        cls.app = init("test").test_client()
 
     @classmethod
     def tearDownClass(cls):
