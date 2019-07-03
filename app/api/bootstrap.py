@@ -3,8 +3,8 @@ import logging
 from flask import Flask
 from flask_restplus import Api
 
-from .api.endpoints.exampleone import example_one_name_space
-from .api.endpoints.exampletwo import example_two_name_space
+from .endpoints.exampleone import example_one_name_space
+from .endpoints.exampletwo import example_two_name_space
 from .configuration import configurations
 
 logger = logging.getLogger(__name__)

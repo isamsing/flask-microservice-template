@@ -1,15 +1,15 @@
 import json
 import unittest
 
-from app.bootstrap import init
+from app.api.bootstrap import init
 
 
-class ExampleEndpointTest(unittest.TestCase):
+class ExampleTwoEndpointTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.uri = "/example/"
-        cls.app = init("test").test_client()
+        cls.uri = "/exampletwo/"
+        cls.app = init("test").app.test_client()
 
     @classmethod
     def tearDownClass(cls):
