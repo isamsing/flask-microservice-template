@@ -1,16 +1,19 @@
 import logging
 
 from flask import Flask
+from flask_restplus import Api
 
-from .api.endpoints.example import example_api
+from .api.endpoints.exampleone import example_one_name_space
+from .api.endpoints.exampletwo import example_two_name_space
 from .configuration import configurations
 
 logger = logging.getLogger(__name__)
 
 
 def init(config):
-    app = Flask(__name__)
-    app.register_blueprint(example_api.blueprint)
+    api = Api(Flask(__name__))
+    api.add_namespace(example_one_name_space)
+    api.add_namespace(example_two_name_space)
     logging.info("Application running with {} configurations".format(config))
-    app.config.from_object(configurations[config])
-    return app
+    api.app.config.from_object(configurations[config])
+    return api
