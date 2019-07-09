@@ -1,7 +1,9 @@
 import sys
 
-from app.api.bootstrap import init
+from api.bootstrap import init
+from api.configuration import configurations
 
 if __name__ == '__main__':
-    api = init(sys.argv[1])
+    configuration = configurations[sys.argv[1]]
+    api = init(configuration())
     api.app.run()

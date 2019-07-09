@@ -2,6 +2,7 @@ import os
 
 
 class Configuration(object):
+    NAME = "FlaskRestApplication"
     DEBUG = False
     CSRF_ENABLED = True
     SECRET = os.getenv('SECRET')
