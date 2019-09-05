@@ -1,10 +1,9 @@
 import logging
-import sys
 
 from api.bootstrap import init
 from api.configuration import configurations
 
-configuration = configurations[sys.argv[1]]
+configuration = configurations["production"]
 api = init(configuration())
 app = api.app
 
