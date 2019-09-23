@@ -1,24 +1,31 @@
-help: ##
-	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+NAME="service/flask/template"
+VERSION=0.0.1
 
-build: ##               Builds BPA inference image and solution according to the versions found the fig file
-	$(info ----------------------------------------------------------------------------------------------------------------------)
-	$(info ******************** Building bpa_inference solution  $(SOLUTION_VERSION) )
-	$(info ********************   with inference image  $(INFERENCE_VERSION) )
-	$(info ----------------------------------------------------------------------------------------------------------------------)
-	@cd $(BASE_PATH_DOCKER); \
-	./zip_app.sh $(INFERENCE_VERSION); \
-	./build.sh $(INFERENCE_VERSION); \
-	cd solution; \
-	./build.sh $(SOLUTION_VERSION); \
-	cd ../../; \
-	echo "$(SOLUTION_VERSION) $(INFERENCE_VERSION)" > build_versions
+help:
+	@echo "help"
+	@echo "tag"
+	@echo "push"
+	@echo "build"
+	@echo "run"
+	@echo "all"
 
-push: ##                Pushes to artifactory the image and solution versions found in fig file
-	$(info ----------------------------------------------------------------------------------------------------------------------)
-	$(info ******************** Pushing BPA inference solution  $(SOLUTION_VERSION) )
-	$(info ********************     and BPA inference image  $(INFERENCE_VERSION) )
-	$(info ********************        artifact name  $(SOLUTION_REPOSITORY)/$(INFERENCE_TAG) )
-	$(info ----------------------------------------------------------------------------------------------------------------------)
-	@docker push $(SOLUTION_REPOSITORY)/$(INFERENCE_TAG)
-	@docker push $(SOLUTION_REPOSITORY)/$(SOLUTION_TAG)
+tag:
+	@echo "Tagging docker image tag: $(tag)"
+	docker tag $(NAME):$(VERSION) $(NAME):latest
+
+push:
+	@echo "pushing docker image tag: $(tag)"
+	docker push $(NAME):latest
+
+build:
+	tag="$(NAME):$(VERSION)"
+	@echo "Building docker image tag: $(tag)"
+	zip app.zip -q -r app -i "*.py"
+	docker build -t $tag .
+	rm app.zip;
+
+run:
+	@echo "Running docker image tag: $(tag)"
+	docker run -d -p 5000:5000 --name test ${tag};
+
+all: build push
