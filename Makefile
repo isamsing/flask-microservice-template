@@ -26,6 +26,6 @@ build:
 
 run:
 	@echo "Running docker image tag: $(tag)"
-	docker run -d -p 5000:5000 --name test ${tag};
+	docker run -d -p 5000:5000 --name test $tag;
 
 all: build push

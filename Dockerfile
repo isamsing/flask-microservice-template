@@ -9,6 +9,7 @@ ENV PATH /opt/conda/bin/:$PATH
 WORKDIR /service
 
 RUN apt-get update
+RUN apt-get install nginx --assume-yes
 RUN apt-get install apt-utils mariadb-client --assume-yes
 RUN apt-get install gcc unzip --assume-yes
 
@@ -20,10 +21,14 @@ RUN pip install -r /service/requirements.txt
 RUN conda install -c conda-forge uwsgi
 
 RUN mkdir /service/conf
-ADD uwsgi.ini /service/conf/
+COPY uwsgi.ini /service/conf/
+COPY nginx.conf /etc/nginx/
+COPY start.sh /service/
 
 ADD app.zip /service/
 RUN unzip /service/app.zip
 RUN mkdir -p /service/log
+RUN rm /service/app.zip
 
-CMD uwsgi /service/conf/uwsgi.ini --thunder-lock --cache2 name=cache,maxitems=10,bitmap=1 >> /service/log/uwsgi.log 2>&1
+CMD ./start.sh
+
